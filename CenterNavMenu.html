@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	.container{
+		width:350px;
+		overflow:hidden;
+		overflow-x: auto;
+		border:1px solid #000;
+		padding: 15px 0;
+		transition: all ease 750ms
+	}
+	ul{
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+	}
+	ul li{
+		width:100px;
+		padding: 10px;
+		border:1px solid #ccc;
+		display: inline-block;
+		margin-left: -5px;
+	}
+	ul li a{
+		text-decoration: none;
+		font-size: 18px;
+		font-family: sans-serif;
+		padding: 15px;
+	}
+/*
+	::-webkit-scrollbar { 
+		display: none; 
+	}
+*/
+</style>
+</head>
+<body>
+	<div id="mainContainer" class="container">
+		<ul id="ul">
+			<li id="tab1"><a href="CenterNavMenu.html?tab=tab1">List item 1</a></li>
+			<li id="tab2"><a href="CenterNavMenu.html?tab=tab2">List item 2</a></li>
+			<li id="tab3"><a href="CenterNavMenu.html?tab=tab3">List item 3</a></li>
+			<li id="tab4"><a href="CenterNavMenu.html?tab=tab4">List item 4</a></li>
+			<li id="tab5"><a href="CenterNavMenu.html?tab=tab5">List item 5</a></li>
+			<li id="tab6"><a href="CenterNavMenu.html?tab=tab6">List item 6</a></li>
+			<li id="tab7"><a href="CenterNavMenu.html?tab=tab7">List item 7</a></li>
+			<li id="tab8"><a href="CenterNavMenu.html?tab=tab8">List item 8</a></li>
+			<li id="tab9"><a href="CenterNavMenu.html?tab=tab9">List item 9</a></li>
+			<li id="tab10"><a href="CenterNavMenu.html?tab=tab10">List item 10</a></li>
+			<li id="tab11"><a href="CenterNavMenu.html?tab=tab11">List item 11</a></li>
+			<li id="tab12"><a href="CenterNavMenu.html?tab=tab12">List item 12</a></li>
+		</ul>
+	</div>
+	<script>
+		window.onload = function(){
+			
+			//get query string parameters
+			function getParameterByName(name, url) {
+				if (!url) {
+				  url = window.location.href;
+				}
+				name = name.replace(/[\[\]]/g, "\\$&");
+				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(url);
+				if (!results) return null;
+				if (!results[2]) return '';
+				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+			
+			var getContainerWidth = document.getElementsByClassName("container")[0].clientWidth;
+			var getQueryString = getParameterByName("tab");
+			
+			//check if querystring is present or not.
+			if(getQueryString != null || getQueryString.length > 0 ){
+				var currItemOffsetLeft = document.getElementById(getQueryString).getBoundingClientRect().left;
+				var currItemWidth = document.getElementById(getQueryString).clientWidth;
+				
+				//change the container scroll position if navigation item is not properly visible.
+				if((currItemOffsetLeft + currItemWidth) > getContainerWidth){
+					document.getElementById("mainContainer").scrollLeft = currItemOffsetLeft - currItemWidth;
+				}
+			}
+		}
+	</script>
+</body>
+</html>
